@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="restaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="mesa">
+    <Key>
+      <PropertyRef Name="idMesa" />
+    </Key>
+    <Property Name="idMesa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="numeroMesa" Type="int" />
+    <Property Name="estadoMesa" Type="int" />
+    <Property Name="idRestaurant" Type="int" />
+  </EntityType>
+  <EntityType Name="orden">
+    <Key>
+      <PropertyRef Name="idOrden" />
+    </Key>
+    <Property Name="idOrden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreCliente" Type="varchar" MaxLength="100" />
+    <Property Name="nitCliente" Type="int" />
+    <Property Name="numeroMesa" Type="int" />
+    <Property Name="fechaOrden" Type="date" />
+    <Property Name="estadoOrden" Type="bit" />
+    <Property Name="costoTotal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="idUsuario" Type="int" />
+  </EntityType>
+  <EntityType Name="plato">
+    <Key>
+      <PropertyRef Name="idPlato" />
+    </Key>
+    <Property Name="idPlato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="plato" Type="varchar" MaxLength="100" />
+    <Property Name="precioPlato" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="descripcionPlato" Type="varchar" MaxLength="200" />
+    <Property Name="imagenPlato" Type="varchar" MaxLength="200" />
+    <Property Name="estadoPlato" Type="bit" />
+    <Property Name="idTipoPlato" Type="int" />
+    <Property Name="idRestaurant" Type="int" />
+  </EntityType>
+  <EntityType Name="plato_orden">
+    <Key>
+      <PropertyRef Name="idPlatoOrden" />
+    </Key>
+    <Property Name="idPlatoOrden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tipoPlato" Type="varchar" MaxLength="100" />
+    <Property Name="platoOrdenado" Type="varchar" MaxLength="100" />
+    <Property Name="precioUnitario" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="cantidad" Type="int" />
+    <Property Name="precioCantidad" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="idOrden" Type="int" />
+  </EntityType>
+  <EntityType Name="reservacion">
+    <Key>
+      <PropertyRef Name="idReservacion" />
+    </Key>
+    <Property Name="idReservacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreReservacion" Type="varchar" MaxLength="100" />
+    <Property Name="fechaReservacion" Type="date" />
+    <Property Name="horaReservacion" Type="time" Precision="7" />
+    <Property Name="estadoReservacion" Type="bit" />
+    <Property Name="idRestaurant" Type="int" />
+  </EntityType>
+  <EntityType Name="restaurant">
+    <Key>
+      <PropertyRef Name="idRestaurant" />
+    </Key>
+    <Property Name="idRestaurant" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreRestaurant" Type="varchar" MaxLength="50" />
+    <Property Name="datosRestaurant" Type="varchar" MaxLength="500" />
+    <Property Name="descripcionRestaurant" Type="varchar" MaxLength="500" />
+    <Property Name="latitud" Type="decimal" Precision="18" Scale="10" />
+    <Property Name="longitud" Type="decimal" Precision="18" Scale="10" />
+  </EntityType>
+  <EntityType Name="tipo_plato">
+    <Key>
+      <PropertyRef Name="idTipoPlato" />
+    </Key>
+    <Property Name="idTipoPlato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tipoPlato" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tipo_usuario">
+    <Key>
+      <PropertyRef Name="idTipoUsuario" />
+    </Key>
+    <Property Name="idTipoUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tipo" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreUsuario" Type="varchar" MaxLength="50" />
+    <Property Name="correo" Type="varchar" MaxLength="50" />
+    <Property Name="edadUsuario" Type="int" />
+    <Property Name="domicilio" Type="varchar" MaxLength="100" />
+    <Property Name="telefonoUsuario" Type="int" />
+    <Property Name="login" Type="varchar" MaxLength="50" />
+    <Property Name="password" Type="varchar" MaxLength="50" />
+    <Property Name="idTipoUsuario" Type="int" />
+    <Property Name="idRestaurant" Type="int" />
+  </EntityType>
+  <Association Name="FK_mesa_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="mesa" Type="Self.mesa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="mesa">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_orden_usuario">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="orden" Type="Self.orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="orden">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_plato_orden_orden">
+    <End Role="orden" Type="Self.orden" Multiplicity="0..1" />
+    <End Role="plato_orden" Type="Self.plato_orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orden">
+        <PropertyRef Name="idOrden" />
+      </Principal>
+      <Dependent Role="plato_orden">
+        <PropertyRef Name="idOrden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_plato_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="plato" Type="Self.plato" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="plato">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_plato_tipo_plato">
+    <End Role="tipo_plato" Type="Self.tipo_plato" Multiplicity="0..1" />
+    <End Role="plato" Type="Self.plato" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_plato">
+        <PropertyRef Name="idTipoPlato" />
+      </Principal>
+      <Dependent Role="plato">
+        <PropertyRef Name="idTipoPlato" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reservacion_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="reservacion" Type="Self.reservacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="reservacion">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_usuario_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_usuario_tipo_usuario">
+    <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_usuario">
+        <PropertyRef Name="idTipoUsuario" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="idTipoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="restaurantModelStoreContainer">
+    <EntitySet Name="mesa" EntityType="Self.mesa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="orden" EntityType="Self.orden" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="plato" EntityType="Self.plato" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="plato_orden" EntityType="Self.plato_orden" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reservacion" EntityType="Self.reservacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="restaurant" EntityType="Self.restaurant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipo_plato" EntityType="Self.tipo_plato" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_mesa_restaurant" Association="Self.FK_mesa_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="mesa" EntitySet="mesa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_orden_usuario" Association="Self.FK_orden_usuario">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="orden" EntitySet="orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_plato_orden_orden" Association="Self.FK_plato_orden_orden">
+      <End Role="orden" EntitySet="orden" />
+      <End Role="plato_orden" EntitySet="plato_orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_plato_restaurant" Association="Self.FK_plato_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="plato" EntitySet="plato" />
+    </AssociationSet>
+    <AssociationSet Name="FK_plato_tipo_plato" Association="Self.FK_plato_tipo_plato">
+      <End Role="tipo_plato" EntitySet="tipo_plato" />
+      <End Role="plato" EntitySet="plato" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reservacion_restaurant" Association="Self.FK_reservacion_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="reservacion" EntitySet="reservacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_usuario_restaurant" Association="Self.FK_usuario_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_usuario_tipo_usuario" Association="Self.FK_usuario_tipo_usuario">
+      <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

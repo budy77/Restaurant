@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="restaurantModelStoreContainer" CdmEntityContainer="restaurantEntities">
+    <EntitySetMapping Name="mesa">
+      <EntityTypeMapping TypeName="restaurantModel.mesa">
+        <MappingFragment StoreEntitySet="mesa">
+          <ScalarProperty Name="idMesa" ColumnName="idMesa" />
+          <ScalarProperty Name="numeroMesa" ColumnName="numeroMesa" />
+          <ScalarProperty Name="estadoMesa" ColumnName="estadoMesa" />
+          <ScalarProperty Name="idRestaurant" ColumnName="idRestaurant" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="orden">
+      <EntityTypeMapping TypeName="restaurantModel.orden">
+        <MappingFragment StoreEntitySet="orden">
+          <ScalarProperty Name="idOrden" ColumnName="idOrden" />
+          <ScalarProperty Name="nombreCliente" ColumnName="nombreCliente" />
+          <ScalarProperty Name="nitCliente" ColumnName="nitCliente" />
+          <ScalarProperty Name="numeroMesa" ColumnName="numeroMesa" />
+          <ScalarProperty Name="fechaOrden" ColumnName="fechaOrden" />
+          <ScalarProperty Name="estadoOrden" ColumnName="estadoOrden" />
+          <ScalarProperty Name="costoTotal" ColumnName="costoTotal" />
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="plato">
+      <EntityTypeMapping TypeName="restaurantModel.plato">
+        <MappingFragment StoreEntitySet="plato">
+          <ScalarProperty Name="idPlato" ColumnName="idPlato" />
+          <ScalarProperty Name="plato1" ColumnName="plato" />
+          <ScalarProperty Name="precioPlato" ColumnName="precioPlato" />
+          <ScalarProperty Name="descripcionPlato" ColumnName="descripcionPlato" />
+          <ScalarProperty Name="imagenPlato" ColumnName="imagenPlato" />
+          <ScalarProperty Name="estadoPlato" ColumnName="estadoPlato" />
+          <ScalarProperty Name="idTipoPlato" ColumnName="idTipoPlato" />
+          <ScalarProperty Name="idRestaurant" ColumnName="idRestaurant" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="plato_orden">
+      <EntityTypeMapping TypeName="restaurantModel.plato_orden">
+        <MappingFragment StoreEntitySet="plato_orden">
+          <ScalarProperty Name="idPlatoOrden" ColumnName="idPlatoOrden" />
+          <ScalarProperty Name="tipoPlato" ColumnName="tipoPlato" />
+          <ScalarProperty Name="platoOrdenado" ColumnName="platoOrdenado" />
+          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="precioCantidad" ColumnName="precioCantidad" />
+          <ScalarProperty Name="idOrden" ColumnName="idOrden" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reservacion">
+      <EntityTypeMapping TypeName="restaurantModel.reservacion">
+        <MappingFragment StoreEntitySet="reservacion">
+          <ScalarProperty Name="idReservacion" ColumnName="idReservacion" />
+          <ScalarProperty Name="nombreReservacion" ColumnName="nombreReservacion" />
+          <ScalarProperty Name="fechaReservacion" ColumnName="fechaReservacion" />
+          <ScalarProperty Name="horaReservacion" ColumnName="horaReservacion" />
+          <ScalarProperty Name="estadoReservacion" ColumnName="estadoReservacion" />
+          <ScalarProperty Name="idRestaurant" ColumnName="idRestaurant" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="restaurant">
+      <EntityTypeMapping TypeName="restaurantModel.restaurant">
+        <MappingFragment StoreEntitySet="restaurant">
+          <ScalarProperty Name="idRestaurant" ColumnName="idRestaurant" />
+          <ScalarProperty Name="nombreRestaurant" ColumnName="nombreRestaurant" />
+          <ScalarProperty Name="datosRestaurant" ColumnName="datosRestaurant" />
+          <ScalarProperty Name="descripcionRestaurant" ColumnName="descripcionRestaurant" />
+          <ScalarProperty Name="latitud" ColumnName="latitud" />
+          <ScalarProperty Name="longitud" ColumnName="longitud" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tipo_plato">
+      <EntityTypeMapping TypeName="restaurantModel.tipo_plato">
+        <MappingFragment StoreEntitySet="tipo_plato">
+          <ScalarProperty Name="idTipoPlato" ColumnName="idTipoPlato" />
+          <ScalarProperty Name="tipoPlato" ColumnName="tipoPlato" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tipo_usuario">
+      <EntityTypeMapping TypeName="restaurantModel.tipo_usuario">
+        <MappingFragment StoreEntitySet="tipo_usuario">
+          <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuario">
+      <EntityTypeMapping TypeName="restaurantModel.usuario">
+        <MappingFragment StoreEntitySet="usuario">
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="nombreUsuario" ColumnName="nombreUsuario" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="edadUsuario" ColumnName="edadUsuario" />
+          <ScalarProperty Name="domicilio" ColumnName="domicilio" />
+          <ScalarProperty Name="telefonoUsuario" ColumnName="telefonoUsuario" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+          <ScalarProperty Name="idRestaurant" ColumnName="idRestaurant" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

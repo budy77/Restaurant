@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="mesa">
+    <Key>
+      <PropertyRef Name="idMesa" />
+    </Key>
+    <Property Name="idMesa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="numeroMesa" Type="Int32" />
+    <Property Name="estadoMesa" Type="Int32" />
+    <Property Name="idRestaurant" Type="Int32" />
+    <NavigationProperty Name="restaurant" Relationship="Self.FK_mesa_restaurant" FromRole="mesa" ToRole="restaurant" />
+  </EntityType>
+  <EntityType Name="orden">
+    <Key>
+      <PropertyRef Name="idOrden" />
+    </Key>
+    <Property Name="idOrden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreCliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="nitCliente" Type="Int32" />
+    <Property Name="numeroMesa" Type="Int32" />
+    <Property Name="fechaOrden" Type="DateTime" Precision="0" />
+    <Property Name="estadoOrden" Type="Boolean" />
+    <Property Name="costoTotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="idUsuario" Type="Int32" />
+    <NavigationProperty Name="usuario" Relationship="Self.FK_orden_usuario" FromRole="orden" ToRole="usuario" />
+    <NavigationProperty Name="plato_orden" Relationship="Self.FK_plato_orden_orden" FromRole="orden" ToRole="plato_orden" />
+  </EntityType>
+  <EntityType Name="plato">
+    <Key>
+      <PropertyRef Name="idPlato" />
+    </Key>
+    <Property Name="idPlato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="plato1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="precioPlato" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="descripcionPlato" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="imagenPlato" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="estadoPlato" Type="Boolean" />
+    <Property Name="idTipoPlato" Type="Int32" />
+    <Property Name="idRestaurant" Type="Int32" />
+    <NavigationProperty Name="restaurant" Relationship="Self.FK_plato_restaurant" FromRole="plato" ToRole="restaurant" />
+    <NavigationProperty Name="tipo_plato" Relationship="Self.FK_plato_tipo_plato" FromRole="plato" ToRole="tipo_plato" />
+  </EntityType>
+  <EntityType Name="plato_orden">
+    <Key>
+      <PropertyRef Name="idPlatoOrden" />
+    </Key>
+    <Property Name="idPlatoOrden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipoPlato" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="platoOrdenado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="precioUnitario" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="precioCantidad" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="idOrden" Type="Int32" />
+    <NavigationProperty Name="orden" Relationship="Self.FK_plato_orden_orden" FromRole="plato_orden" ToRole="orden" />
+  </EntityType>
+  <EntityType Name="reservacion">
+    <Key>
+      <PropertyRef Name="idReservacion" />
+    </Key>
+    <Property Name="idReservacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreReservacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="fechaReservacion" Type="DateTime" Precision="0" />
+    <Property Name="horaReservacion" Type="Time" Precision="7" />
+    <Property Name="estadoReservacion" Type="Boolean" />
+    <Property Name="idRestaurant" Type="Int32" />
+    <NavigationProperty Name="restaurant" Relationship="Self.FK_reservacion_restaurant" FromRole="reservacion" ToRole="restaurant" />
+  </EntityType>
+  <EntityType Name="restaurant">
+    <Key>
+      <PropertyRef Name="idRestaurant" />
+    </Key>
+    <Property Name="idRestaurant" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreRestaurant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="datosRestaurant" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="descripcionRestaurant" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="latitud" Type="Decimal" Precision="18" Scale="10" />
+    <Property Name="longitud" Type="Decimal" Precision="18" Scale="10" />
+    <NavigationProperty Name="mesa" Relationship="Self.FK_mesa_restaurant" FromRole="restaurant" ToRole="mesa" />
+    <NavigationProperty Name="plato" Relationship="Self.FK_plato_restaurant" FromRole="restaurant" ToRole="plato" />
+    <NavigationProperty Name="reservacion" Relationship="Self.FK_reservacion_restaurant" FromRole="restaurant" ToRole="reservacion" />
+    <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_restaurant" FromRole="restaurant" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="tipo_plato">
+    <Key>
+      <PropertyRef Name="idTipoPlato" />
+    </Key>
+    <Property Name="idTipoPlato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipoPlato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="plato" Relationship="Self.FK_plato_tipo_plato" FromRole="tipo_plato" ToRole="plato" />
+  </EntityType>
+  <EntityType Name="tipo_usuario">
+    <Key>
+      <PropertyRef Name="idTipoUsuario" />
+    </Key>
+    <Property Name="idTipoUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_tipo_usuario" FromRole="tipo_usuario" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="edadUsuario" Type="Int32" />
+    <Property Name="domicilio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="telefonoUsuario" Type="Int32" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="idTipoUsuario" Type="Int32" />
+    <Property Name="idRestaurant" Type="Int32" />
+    <NavigationProperty Name="orden" Relationship="Self.FK_orden_usuario" FromRole="usuario" ToRole="orden" />
+    <NavigationProperty Name="restaurant" Relationship="Self.FK_usuario_restaurant" FromRole="usuario" ToRole="restaurant" />
+    <NavigationProperty Name="tipo_usuario" Relationship="Self.FK_usuario_tipo_usuario" FromRole="usuario" ToRole="tipo_usuario" />
+  </EntityType>
+  <Association Name="FK_mesa_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="mesa" Type="Self.mesa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="mesa">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_orden_usuario">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="orden" Type="Self.orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idUsuario" />
+      </Principal>
+      <Dependent Role="orden">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_plato_orden_orden">
+    <End Role="orden" Type="Self.orden" Multiplicity="0..1" />
+    <End Role="plato_orden" Type="Self.plato_orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orden">
+        <PropertyRef Name="idOrden" />
+      </Principal>
+      <Dependent Role="plato_orden">
+        <PropertyRef Name="idOrden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_plato_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="plato" Type="Self.plato" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="plato">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_plato_tipo_plato">
+    <End Role="tipo_plato" Type="Self.tipo_plato" Multiplicity="0..1" />
+    <End Role="plato" Type="Self.plato" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_plato">
+        <PropertyRef Name="idTipoPlato" />
+      </Principal>
+      <Dependent Role="plato">
+        <PropertyRef Name="idTipoPlato" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reservacion_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="reservacion" Type="Self.reservacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="reservacion">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_usuario_restaurant">
+    <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurant">
+        <PropertyRef Name="idRestaurant" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="idRestaurant" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_usuario_tipo_usuario">
+    <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_usuario">
+        <PropertyRef Name="idTipoUsuario" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="idTipoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="restaurantEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="mesa" EntityType="Self.mesa" />
+    <EntitySet Name="orden" EntityType="Self.orden" />
+    <EntitySet Name="plato" EntityType="Self.plato" />
+    <EntitySet Name="plato_orden" EntityType="Self.plato_orden" />
+    <EntitySet Name="reservacion" EntityType="Self.reservacion" />
+    <EntitySet Name="restaurant" EntityType="Self.restaurant" />
+    <EntitySet Name="tipo_plato" EntityType="Self.tipo_plato" />
+    <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" />
+    <AssociationSet Name="FK_mesa_restaurant" Association="Self.FK_mesa_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="mesa" EntitySet="mesa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_orden_usuario" Association="Self.FK_orden_usuario">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="orden" EntitySet="orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_plato_orden_orden" Association="Self.FK_plato_orden_orden">
+      <End Role="orden" EntitySet="orden" />
+      <End Role="plato_orden" EntitySet="plato_orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_plato_restaurant" Association="Self.FK_plato_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="plato" EntitySet="plato" />
+    </AssociationSet>
+    <AssociationSet Name="FK_plato_tipo_plato" Association="Self.FK_plato_tipo_plato">
+      <End Role="tipo_plato" EntitySet="tipo_plato" />
+      <End Role="plato" EntitySet="plato" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reservacion_restaurant" Association="Self.FK_reservacion_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="reservacion" EntitySet="reservacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_usuario_restaurant" Association="Self.FK_usuario_restaurant">
+      <End Role="restaurant" EntitySet="restaurant" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_usuario_tipo_usuario" Association="Self.FK_usuario_tipo_usuario">
+      <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

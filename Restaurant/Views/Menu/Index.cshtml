@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class=" container">
+    <ul class="nav nav-tabs" id="ul">
+                
+        
+    </ul>
+    <div class="tab-content" id="panel">
+        
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var idTipos = @Html.Raw(Json.Encode(ViewBag.idTipos));
+            var tipos = @Html.Raw(Json.Encode(ViewBag.tipos));
+            var nombrePlato = @Html.Raw(Json.Encode(ViewBag.nombrePlato));
+            var precioPlato = @Html.Raw(Json.Encode(ViewBag.precioPlato));
+            var descripcionPlato = @Html.Raw(Json.Encode(ViewBag.descripcionPlato));
+            var imagenPlato = @Html.Raw(Json.Encode(ViewBag.imagenPlato));
+            var idpla = @Html.Raw(Json.Encode(ViewBag.idPla));
+
+            var platos = [];
+
+            for(var o = 0; o < nombrePlato.length ; o++)
+            {
+                var plato ={
+                    nombre: nombrePlato[o],
+                    descripcion: descripcionPlato[o],
+                    precio: precioPlato[o],
+                    imagen: imagenPlato[o],
+                    id: idpla[o]
+                };
+
+                platos.push(plato);
+                //alert(platos[o].nombre);
+            }
+
+
+            for(var i =0; i< idTipos.length; i++)
+            {
+                $("#ul").append('<li><a href="#'+idTipos[i]+'" data-toggle="tab">'+tipos[i]+'</a></li>');
+            }
+
+            for(var e =0; e<idTipos.length ;e++)
+            {
+                if(e==0)
+                {
+                    $("#panel").append('<div class="tab-pane active" id="'+idTipos[e]+'">  </div>');
+                    for( var k=0;k<platos.length;k++)
+                    {
+                        if(platos[k].id == idTipos[e])
+                        {
+                            $("#"+idTipos[e]).append('<h4> '+ platos[k].nombre+' </h4>');
+                        }
+                    }
+                }
+                else
+                {
+                    $("#panel").append('<div class="tab-pane" id="'+idTipos[e]+'"> '+tipos[e]+' </div>');
+                }
+
+            }
+
+
+            });
+    </script>
+}
