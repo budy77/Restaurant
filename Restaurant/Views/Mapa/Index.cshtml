@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Mapa</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form class="form-control">
+                <select id="sel1" class="dropdown"></select>
+            </form><br /><br />
+        </div>
+
+        <div id="googleMap" style="width:500px;height:380px;"></div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            var id = @Html.Raw(Json.Encode(ViewBag.id));
+            var nombre = @Html.Raw(Json.Encode(ViewBag.nombres));
+            for(var i=0;i<id.length;i++)
+            {
+                $('#sel1').append('<option value ="'+id[i]+'">'+nombre[i]+'</option>');
+            }
+            var latitud = @Html.Raw(Json.Encode(ViewBag.latitud));
+            var longitud = @Html.Raw(Json.Encode(ViewBag.longitud));
+
+
+
+            var centro = new google.maps.LatLng(latitud[0],longitud[0]);
+
+            
+            function initialize() {
+                var mapProp = {
+                    center:centro,
+                    zoom:15,
+                    mapTypeId:google.maps.MapTypeId.ROADMAP
+                };
+
+                var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+                var marker=new google.maps.Marker({
+                    position:centro,
+                    animation:google.maps.Animation.BOUNCE
+                });
+
+                marker.setMap(map);
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            $('#sel1').change(function(){
+                var valor = $("#sel1").val();
+                var pos;
+                for(var j =0;j<id.length;j++)
+                {
+                    if(valor == id[j])
+                    {
+                        pos=j;
+                    }
+                }
+                centro = new google.maps.LatLng(latitud[pos],longitud[pos]);
+                var mapProp = {
+                    center:centro,
+                    zoom:15,
+                    mapTypeId:google.maps.MapTypeId.ROADMAP
+                };
+
+                var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+                var marker=new google.maps.Marker({
+                    position:centro,
+                    animation:google.maps.Animation.BOUNCE
+                });
+
+                marker.setMap(map);
+
+                google.maps.event.addDomListener(window, 'load', initialize);
+            });
+        });
+    </script>
+}
