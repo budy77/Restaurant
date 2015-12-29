@@ -10,6 +10,16 @@
             <form class="form-control">
                 <select id="sel1" class="dropdown"></select>
             </form><br /><br />
+            <div>
+                <b>Ubicación del Restaurant:</b><br />
+                <p id="pa1">
+
+                </p><br />
+                <b>Historia del Restaurant:</b>
+                <p id="pa2">
+
+                </p>
+            </div>
         </div>
 
         <div id="googleMap" style="width:500px;height:380px;"></div>
@@ -23,7 +33,7 @@
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
+            
 
             var id = @Html.Raw(Json.Encode(ViewBag.id));
             var nombre = @Html.Raw(Json.Encode(ViewBag.nombres));
@@ -34,11 +44,13 @@
             var latitud = @Html.Raw(Json.Encode(ViewBag.latitud));
             var longitud = @Html.Raw(Json.Encode(ViewBag.longitud));
 
-
+            var datos = @Html.Raw(Json.Encode(ViewBag.datos));
+            var des = @Html.Raw(Json.Encode(ViewBag.des));
 
             var centro = new google.maps.LatLng(latitud[0],longitud[0]);
-
-            
+            //cargamos la primera descripcion e historia
+            $("#pa1").text(datos[0]);
+            $("#pa2").text(des[0]);
             function initialize() {
                 var mapProp = {
                     center:centro,
@@ -84,6 +96,9 @@
                 marker.setMap(map);
 
                 google.maps.event.addDomListener(window, 'load', initialize);
+
+                $("#pa1").text(datos[pos]);
+                $("#pa2").text(des[pos]);
             });
         });
     </script>
